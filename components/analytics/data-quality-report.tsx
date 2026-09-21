@@ -5,6 +5,7 @@ import { getOverallDataHealth } from "@/lib/stats-utils";
 import { useAnalysisData } from "@/hooks/use-analysis-data";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { ShieldCheck, AlertTriangle, AlertCircle, CheckCircle2 } from "lucide-react";
+import { InfoHint } from "@/components/info-hint";
 
 export function DataQualityReport() {
   // Gefiltert und ausgewertet wird einmal zentral für alle Widgets
@@ -22,7 +23,7 @@ export function DataQualityReport() {
         <div className="flex-1 rounded-lg border border-dashed flex flex-col items-center justify-center text-muted-foreground text-sm p-4 text-center">
           <ShieldCheck className="h-8 w-8 mb-2 opacity-50" />
           <p>Wähle einen Datensatz aus</p>
-          <span className="text-xs opacity-70">Der Health Score wird hier ermittelt</span>
+          <span className="text-xs opacity-70">Hier siehst du, wie vollständig die Daten sind</span>
         </div>
       </div>
     );
@@ -44,10 +45,14 @@ export function DataQualityReport() {
         <h3 className="font-medium text-sm flex items-center gap-2">
             <ShieldCheck className="h-4 w-4 text-emerald-500" />
             Qualitätsreport
+            <InfoHint title="Qualitätsreport">
+              <p>Zeigt für jede Eigenschaft (Spalte), bei wie vielen Einträgen sie tatsächlich ausgefüllt ist.</p>
+              <p>Der <strong>Füllgrad</strong> 100 % heißt: kein Eintrag fehlt. Niedrige Werte bedeuten Lücken, Auswertungen dieser Spalte sind dann weniger aussagekräftig.</p>
+            </InfoHint>
         </h3>
-        <div className={`flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-background border text-xs font-semibold ${healthColor}`}>
+        <div className={`flex shrink-0 items-center gap-1.5 whitespace-nowrap px-2 py-0.5 rounded-full bg-background border text-xs font-semibold ${healthColor}`}>
             <HealthIcon className="h-3.5 w-3.5" />
-            Score: {Math.round(healthScore)}%
+            {Math.round(healthScore)} % vollständig
         </div>
       </div>
 

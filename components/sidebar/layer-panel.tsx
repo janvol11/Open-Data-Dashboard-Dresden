@@ -6,6 +6,7 @@ import { Eye, EyeOff, Trash2, Layers, ChevronDown, ChevronUp, Star } from "lucid
 import { useState } from "react";
 import { cn } from "@/lib/utils";
 import { LayerStyling } from "./layer-styling";
+import { InfoHint } from "@/components/info-hint";
 
 function LayerRow({ layer }: { layer: MapLayer }) {
   const { removeLayer, updateLayer, setPrimaryLayer, primaryLayerId } = useDashboardStore(
@@ -140,6 +141,10 @@ export function LayerPanel() {
         </button>
 
         <div className="flex items-center gap-1 shrink-0">
+          <InfoHint title="Layer">
+            <p>Ein Layer ist ein geladener Datensatz, der als eigene Ebene über der Karte liegt. Mehrere Layer lassen sich gleichzeitig anzeigen.</p>
+            <p>Der Layer mit dem <strong>Stern</strong> ist der aktive: Nur er fließt in Diagramme, Qualitätsreport und Tabelle ein. Über das Auge blendest du einen Layer aus, ohne ihn zu entfernen.</p>
+          </InfoHint>
           {layers.length > 0 && (
             <button
               onClick={clearLayers}

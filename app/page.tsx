@@ -15,6 +15,7 @@ import { DashboardSettings } from "@/components/dashboard/dashboard-settings";
 import { DashboardGrid } from "@/components/dashboard/dashboard-grid";
 import { OnboardingTour } from "@/components/onboarding-tour";
 import { ShareWorkspace } from "@/components/dashboard/share-workspace";
+import { AnalysisStatusBar } from "@/components/dashboard/analysis-status-bar";
 import { useEffect } from "react";
 import LZString from "lz-string";
 import { useDashboardStore } from "@/store/useDashboardStore";
@@ -133,12 +134,13 @@ export default function DashboardPage() {
 
           <Panel defaultSize="80%">
             <div className="h-full overflow-y-auto bg-muted/5 relative z-0">
+              <AnalysisStatusBar />
               <DashboardGrid
                 widgets={{
                   map: {
                     component: (
                       <>
-                        <div className="absolute top-4 left-4 z-1001 bg-background/90 backdrop-blur px-3 py-1.5 border shadow-sm rounded-md text-sm font-medium flex items-center gap-2 pointer-events-none hidden md:flex">
+                        <div className="absolute top-3 left-14 z-1001 bg-background/90 backdrop-blur px-3 py-1.5 border shadow-sm rounded-md text-sm font-medium flex items-center gap-2 pointer-events-none hidden xl:flex">
                           <MapIcon className="h-4 w-4 text-blue-500" />
                           Geodaten-Visualisierung
                         </div>

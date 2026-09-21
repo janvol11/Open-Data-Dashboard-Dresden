@@ -8,6 +8,7 @@ import { inferTableColumns, type TableColumn } from "@/lib/table-utils";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Table2 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { InfoHint } from "@/components/info-hint";
 
 /** Erste Seite an Zeilen, danach wird in diesen Schritten nachgeladen (siehe "Mehr laden" andernorts in der App). */
 const PAGE_SIZE = 100;
@@ -85,6 +86,10 @@ export function AttributeTable() {
         <h3 className="font-medium text-sm flex items-center gap-2 min-w-0">
           <Table2 className="h-4 w-4 text-indigo-500 shrink-0" />
           <span className="truncate">Attributtabelle{sourceLabel ? ` – ${sourceLabel}` : ""}</span>
+          <InfoHint title="Attributtabelle">
+            <p>Die Rohdaten als Tabelle: Jede Zeile ist ein Objekt auf der Karte (zum Beispiel ein Baum), jede Spalte eine seiner Eigenschaften (Attribute).</p>
+            <p>Die Tabelle zeigt nur, was im aktuellen Kartenausschnitt liegt und zu einem gesetzten Diagrammfilter passt.</p>
+          </InfoHint>
         </h3>
         <span className="shrink-0 text-xs font-medium text-muted-foreground bg-background border rounded-full px-2 py-0.5 tabular-nums">
           {totalRows.toLocaleString("de-DE")} Zeilen · {columns.length} Spalten

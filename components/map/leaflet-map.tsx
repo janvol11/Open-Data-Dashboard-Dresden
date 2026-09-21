@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useCallback, useEffect, useRef } from "react";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 import type { PathOptions } from "leaflet";
@@ -14,6 +14,7 @@ import { buildCategoryColorIndex } from "@/lib/thematic-styling";
 import { Map as MapIcon } from "lucide-react";
 import { createHeatLayer } from "./heatmap-layer";
 import { MapLegend } from "./map-legend";
+import { PlaceSearch, type PlaceResult } from "./place-search";
 
 // Marker-Icons aus dem installierten leaflet-Paket statt von einem CDN laden:
 // Leaflet leitet die Icon-Pfade sonst relativ zum CSS ab, was unter Next.js'
@@ -200,6 +201,7 @@ export default function LeafletMap() {
   const containerRef = useRef<HTMLDivElement>(null);
   const mapRef = useRef<L.Map | null>(null);
   const renderedRef = useRef<Map<string, RenderedLayer>>(new Map());
+  const placeMarkerRef = useRef<L.CircleMarker | null>(null);
 
   const hasAnyData = layers.some((l) => l.geoJson !== null && l.visible);
 
@@ -353,9 +355,38 @@ export default function LeafletMap() {
     }
   }, [chartFilter, layers]);
 
+  // Zum gesuchten Ort springen; die Kartenbewegung löst über "moveend" auch
+  // das Cross-Filtering aus, die Widgets folgen also dem neuen Ausschnitt
+  const showPlace = useCallback((place: PlaceResult) => {
+    const map = mapRef.current;
+    if (!map) return;
+
+    const [south, north, west, east] = place.bounds;
+    map.fitBounds(
+      [
+        [south, west],
+        [north, east],
+      ],
+      { padding: [40, 40], maxZoom: 17, animate: true, duration: 0.8 }
+    );
+
+    placeMarkerRef.current?.remove();
+    placeMarkerRef.current = L.circleMarker([place.lat, place.lon], {
+      radius: 8,
+      color: "#ffffff",
+      weight: 2,
+      fillColor: "#6366f1",
+      fillOpacity: 1,
+    })
+      .bindTooltip(place.name, { direction: "top", offset: [0, -8] })
+      .addTo(map);
+  }, []);
+
   return (
     <div className="w-full h-full relative" style={{ zIndex: 0 }}>
       <div ref={containerRef} style={{ height: "100%", width: "100%", zIndex: 0 }} />
+
+      <PlaceSearch onSelect={showPlace} />
 
       <MapLegend layers={layers} />
 

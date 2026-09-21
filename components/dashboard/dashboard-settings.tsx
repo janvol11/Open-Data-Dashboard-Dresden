@@ -18,7 +18,7 @@ import { resetOnboardingTour } from "@/components/onboarding-tour";
 export const WIDGET_TITLES: Record<string, string> = {
   map: "Karte",
   temporal: "Zeitreihenanalyse",
-  visual_analytics: "Visual Analytics",
+  visual_analytics: "Attribut-Verteilung",
   data_quality: "Datenqualität",
   correlation: "Korrelationsanalyse",
   attribute_table: "Attributtabelle",
@@ -76,7 +76,7 @@ export function DashboardSettings() {
         <DropdownMenuSeparator />
 
         <DropdownMenuGroup>
-          <DropdownMenuLabel>Onboarding</DropdownMenuLabel>
+          <DropdownMenuLabel>Einführung</DropdownMenuLabel>
           <DropdownMenuItem
             onClick={handleRestartTour}
             className="flex items-center gap-2 cursor-pointer text-muted-foreground hover:text-foreground"

@@ -22,6 +22,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { TrendingUp, ArrowRightLeft, Grid3X3, MousePointerClick } from "lucide-react";
+import { InfoHint } from "@/components/info-hint";
 
 function pearsonR(xs: number[], ys: number[]): number | null {
   const n = xs.length;
@@ -326,7 +327,7 @@ export function CorrelationScatterplot() {
         <div className="flex-1 rounded-lg border border-dashed flex flex-col items-center justify-center text-muted-foreground text-sm">
           <TrendingUp className="h-8 w-8 mb-2 opacity-50" />
           <p>Wähle einen Datensatz aus</p>
-          <span className="text-xs opacity-70">Scatterplot & Matrix erscheinen für numerische Attribute</span>
+          <span className="text-xs opacity-70">Streudiagramm und Matrix erscheinen für Zahlenwerte</span>
         </div>
       </div>
     );
@@ -356,6 +357,11 @@ export function CorrelationScatterplot() {
         <h3 className="font-medium text-sm flex items-center gap-2 mr-auto">
           <TrendingUp className="h-4 w-4 text-violet-500" />
           Korrelationsanalyse
+          <InfoHint title="Korrelationsanalyse">
+            <p>Prüft, ob zwei Zahlenwerte zusammenhängen, zum Beispiel ob höhere Bäume auch einen dickeren Stamm haben. Jeder Punkt im Streudiagramm ist ein Eintrag.</p>
+            <p><strong>Pearson r</strong> fasst den Zusammenhang in einer Zahl zwischen −1 und 1: Nahe 1 steigen beide Werte gemeinsam, nahe −1 sinkt der eine, wenn der andere steigt, um 0 gibt es keinen erkennbaren Zusammenhang.</p>
+            <p>Ein Zusammenhang heißt nicht, dass das eine das andere verursacht.</p>
+          </InfoHint>
         </h3>
 
         <div className="flex items-center gap-1.5">

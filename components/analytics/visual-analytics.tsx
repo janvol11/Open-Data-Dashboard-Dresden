@@ -25,6 +25,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { BarChart3, X } from "lucide-react";
+import { InfoHint } from "@/components/info-hint";
 
 const COLORS = ["#3b82f6", "#10b981", "#f59e0b", "#ef4444", "#8b5cf6", "#ec4899", "#14b8a6", "#f97316"];
 
@@ -40,7 +41,7 @@ export function VisualAnalytics() {
     );
 
   // Gefiltert und ausgewertet wird einmal zentral für alle Widgets
-  const { geoJsonData, stats } = useAnalysisData();
+  const { geoJsonData, stats } = useAnalysisData({ ignoreChartFilter: true });
 
   useEffect(() => {
     if (!visualAnalyticsAttribute && stats.length > 0) {
@@ -56,7 +57,7 @@ export function VisualAnalytics() {
       <div className="w-full h-full flex flex-col">
         <h3 className="font-medium text-sm flex items-center gap-2 mb-3">
           <BarChart3 className="h-4 w-4 text-orange-500" />
-          Visual Analytics
+          Attribut-Verteilung
         </h3>
         <div className="flex-1 rounded-lg border border-dashed flex flex-col items-center justify-center text-muted-foreground text-sm">
           <BarChart3 className="h-8 w-8 mb-2 opacity-50" />
@@ -90,6 +91,10 @@ export function VisualAnalytics() {
         <h3 className="font-medium text-sm flex items-center gap-2">
           <BarChart3 className="h-4 w-4 text-orange-500" />
           Attribut-Verteilung
+          <InfoHint title="Attribut-Verteilung">
+            <p>Zeigt, wie oft jeder Wert einer Eigenschaft vorkommt, zum Beispiel wie viele Bäume jeder Gattung im Kartenausschnitt stehen.</p>
+            <p>Ein Klick auf einen Balken filtert Karte, Tabelle und alle anderen Auswertungen auf diesen Wert. Ein zweiter Klick hebt den Filter wieder auf.</p>
+          </InfoHint>
           {chartFilter && chartFilter.attribute === activeStat?.name && (
             <button
               onClick={() => setChartFilter(null)}

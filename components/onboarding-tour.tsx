@@ -88,9 +88,9 @@ const STEP_DEFINITIONS: Step[] = [
   },
   {
     target: "#tour-analytics",
-    title: "Diagramme & Cross-Filtering",
+    title: "Diagramme & Filter",
     content:
-      "Diagramme passen sich dynamisch an deinen Kartenausschnitt an. Klicke auf Balken oder Segmente, um die Karte weiter einzugrenzen — das sogenannte Cross-Filtering.",
+      "Diagramme passen sich dynamisch an deinen Kartenausschnitt an. Klicke auf einen Balken, um Karte, Tabelle und Auswertungen auf diesen Wert einzugrenzen. Ein zweiter Klick hebt den Filter wieder auf.",
     placement: "top",
     skipBeacon: true,
   },
@@ -130,7 +130,7 @@ const STEP_DEFINITIONS: Step[] = [
     target: "#tour-share",
     title: "Workspace teilen",
     content:
-      "Mit „Share“ kopierst du einen Link in die Zwischenablage, der deine geladenen Layer, deren Styling, Filter und Diagramm-Einstellungen enthält. Wer den Link öffnet, sieht denselben Workspace.",
+      "Mit „Teilen“ kopierst du einen Link in die Zwischenablage, der deine geladenen Layer, deren Styling, Filter und Diagramm-Einstellungen enthält. Wer den Link öffnet, sieht denselben Workspace.",
     placement: "bottom",
     skipBeacon: true,
   },

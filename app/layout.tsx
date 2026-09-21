@@ -8,9 +8,30 @@ import { cn } from "@/lib/utils";
 const geist = Geist({ subsets: ['latin'], variable: '--font-sans' });
 const jetbrainsMono = JetBrains_Mono({ subsets: ["latin"], variable: "--font-mono" });
 
+const DESCRIPTION =
+  "Offene Geodaten der Landeshauptstadt Dresden auf der Karte erkunden, auswerten und als Link teilen.";
+
+// Basis für absolute Bild-URLs in Link-Vorschauen; Vercel setzt die Variable
+// auf die Produktionsdomain, lokal gilt der Entwicklungsserver
+const SITE_URL = process.env.VERCEL_PROJECT_PRODUCTION_URL
+  ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
+  : "http://127.0.0.1:3000";
+
 export const metadata: Metadata = {
+  metadataBase: new URL(SITE_URL),
   title: "Dresden Data Workspace",
-  description: "WFS Explorer and Data Analytics Dashboard for the City of Dresden",
+  description: DESCRIPTION,
+  openGraph: {
+    title: "Dresden Data Workspace",
+    description: DESCRIPTION,
+    locale: "de_DE",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Dresden Data Workspace",
+    description: DESCRIPTION,
+  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

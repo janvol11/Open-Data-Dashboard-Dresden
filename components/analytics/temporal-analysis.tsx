@@ -45,6 +45,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Clock, BarChart3, Activity } from "lucide-react";
+import { InfoHint } from "@/components/info-hint";
 
 export function TemporalAnalysis() {
   // Gefiltert und ausgewertet wird einmal zentral für alle Widgets
@@ -153,6 +154,10 @@ export function TemporalAnalysis() {
         <h3 className="font-medium text-sm flex items-center gap-2 mr-auto">
           <Clock className="h-4 w-4 text-blue-500" />
           Zeitreihenanalyse
+          <InfoHint title="Zeitreihenanalyse">
+            <p>Zeigt, wie sich die Daten über die Zeit entwickeln, etwa wie viele Bäume pro Jahr gepflanzt wurden.</p>
+            <p><strong>Zeitachse</strong> ist die Spalte mit Datum oder Jahr. <strong>Metrik</strong> legt fest, was gezählt wird: die Anzahl der Einträge, die Summe einer Zahlenspalte oder deren Einzelwerte.</p>
+          </InfoHint>
         </h3>
 
         <div className="flex items-center gap-1.5">

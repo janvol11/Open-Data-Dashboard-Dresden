@@ -60,7 +60,7 @@ export function ShareWorkspace() {
       onClick={handleShare}
     >
       {copied ? <Check className="h-3.5 w-3.5 text-green-500" /> : <Share2 className="h-3.5 w-3.5" />}
-      {copied ? "Kopiert" : "Share"}
+      {copied ? "Kopiert" : "Teilen"}
     </Button>
   );
 }
