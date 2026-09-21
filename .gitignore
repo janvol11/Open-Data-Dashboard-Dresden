@@ -1,0 +1,23 @@
+# Abhängigkeiten und Build-Ausgaben
+/node_modules/
+/.next/
+/out/
+/build/
+/coverage/
+next-env.d.ts
+*.tsbuildinfo
+*.log
+.eslintcache
+
+# Umgebungsvariablen (eine Vorlage darf eingecheckt werden)
+.env*
+!.env.example
+
+# Betriebssystem
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Lokale Editor- und Werkzeugkonfiguration
+.vscode/
+.idea/
