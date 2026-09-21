@@ -114,9 +114,6 @@ export default function DashboardPage() {
           <ShareWorkspace />
           <DashboardSettings />
           <ThemeToggle />
-          <span className="text-xs text-muted-foreground font-mono bg-muted px-2 py-1 rounded-md hidden sm:inline-block">
-            V 0.1.0
-          </span>
         </div>
       </header>
 
