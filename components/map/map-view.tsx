@@ -44,7 +44,10 @@ export function useLoadWfsLayer() {
   const setAvailableAttributes = useDashboardStore((s) => s.setAvailableAttributes);
 
   const loadLayer = useCallback(
-    async (wfsUrl: string, label: string, preferredTypeName?: string): Promise<string | undefined> => {
+    async (wfsUrl: string, givenLabel?: string, preferredTypeName?: string): Promise<string | undefined> => {
+      // Ohne Namen (direkt eingegebene URL) bis zur Capabilities-Antwort den
+      // Host anzeigen, danach den Titel des Dienstes übernehmen
+      let label = givenLabel ?? new URL(wfsUrl).hostname;
       // Aktuellen Stand lesen statt der Layer aus dem Render-Closure: Bei
       // schnellen Doppelklicks wäre der sonst veraltet und lüde doppelt
       const existing = useDashboardStore.getState().layers.find((l) => l.wfsUrl === wfsUrl);
@@ -66,7 +69,7 @@ export function useLoadWfsLayer() {
       });
 
       try {
-        const layerNames = await fetchWfsCapabilities(wfsUrl);
+        const { layerNames, layerTitles, serviceTitle } = await fetchWfsCapabilities(wfsUrl);
 
         if (preferredTypeName && !layerNames.includes(preferredTypeName)) {
           // Dienst hat seine Layer umbenannt/entfernt; Fallback auf den ersten
@@ -90,7 +93,10 @@ export function useLoadWfsLayer() {
           return undefined;
         }
 
-        updateLayer(layerId, { typeName });
+        if (!givenLabel) {
+          label = layerTitles[typeName] || serviceTitle || label;
+        }
+        updateLayer(layerId, { typeName, label });
         toast.info(`Lade Layer: ${typeName}`, { id: `loading-${layerId}` });
 
         const geoJson = await fetchWfsFeatures(wfsUrl, typeName);
@@ -109,8 +115,9 @@ export function useLoadWfsLayer() {
             id: `loading-${layerId}`,
           });
         } else {
-          // Kappung durch count=500 sichtbar machen: Alle Auswertungen beziehen
-          // sich sonst unbemerkt auf einen beliebigen Ausschnitt des Datensatzes
+          // Kappung durch WFS_FEATURE_LIMIT sichtbar machen: Alle Auswertungen
+          // beziehen sich sonst unbemerkt auf einen beliebigen Ausschnitt des
+          // Datensatzes
           const matched = getMatchedFeatureCount(geoJson);
           if (matched !== null ? matched > count : count >= WFS_FEATURE_LIMIT) {
             toast.warning(

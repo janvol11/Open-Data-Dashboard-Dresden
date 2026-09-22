@@ -5,6 +5,7 @@ import { useDashboardStore } from "@/store/useDashboardStore";
 import { useLoadWfsLayer } from "@/components/map/map-view";
 import {
   TreeDeciduous,
+  Trees,
   Baby,
   Loader2,
   Sparkles,
@@ -12,7 +13,6 @@ import {
   MapPin,
   CheckCircle2,
   ChevronRight,
-  Bike,
   Trash2,
   Landmark,
   Accessibility,
@@ -26,6 +26,7 @@ import { useState, useCallback, useMemo } from "react";
 import { toast } from "sonner";
 import { motion, AnimatePresence } from "motion/react";
 import { buildThematicStyling } from "@/lib/thematic-styling";
+import { WFS_FEATURE_LIMIT } from "@/lib/wfs-service";
 
 interface DataStory {
   id: string;
@@ -53,27 +54,27 @@ const DATA_STORIES: DataStory[] = [
   {
     id: "story-baeume",
     title: "Stadtbäume",
-    description: "Alle erfassten Straßen- und Anlagenbäume Dresdens – über 50.000 georeferenzierte Datenpunkte.",
+    description: `Das Baumkataster umfasst rund 124.000 Straßen- und Anlagenbäume; geladen wird ein Ausschnitt der ersten ${WFS_FEATURE_LIMIT.toLocaleString("de-DE")}.`,
     icon: TreeDeciduous,
     url: "https://kommisdd.dresden.de/net3/public/ogc.ashx?NodeId=1633&Service=WFS&Request=GetCapabilities",
     gradient: "from-emerald-500/20 to-green-600/10",
     iconBg: "bg-emerald-500",
     category: "Stadtgrün",
-    featureHint: "~50.000 Bäume",
-    insight: "Ideal für Heatmap-Visualisierung und Baumartenanalyse",
+    featureHint: `Ausschnitt: ${WFS_FEATURE_LIMIT.toLocaleString("de-DE")} von ~124.000`,
+    insight: "Baumarten, Höhe und Kronendurchmesser vergleichen",
   },
   {
     id: "story-gruenanlagen",
     title: "Grünanlagen",
     description: "Öffentliche Parks, Gartenanlagen und Grünflächen nach Grünanlagensatzung.",
-    icon: Bike,
+    icon: Trees,
     url: "https://kommisdd.dresden.de/net3/public/ogc.ashx?NodeId=757&Service=WFS&Request=GetCapabilities",
     // Knoten liefert 6 Layer, beginnend mit "Spielbereiche (Punkte)" statt Grünflächen
     typeName: "cls:L569",
     gradient: "from-lime-500/20 to-green-600/10",
     iconBg: "bg-lime-600",
     category: "Stadtgrün",
-    featureHint: "Parks & Anlagen",
+    featureHint: "~590 Flächen",
     insight: "Zeigt Polygone der Grünflächen mit Kategorien",
   },
   {
@@ -85,20 +86,20 @@ const DATA_STORIES: DataStory[] = [
     gradient: "from-sky-500/20 to-blue-600/10",
     iconBg: "bg-sky-500",
     category: "Soziales",
-    featureHint: "~520 Einrichtungen",
+    featureHint: "~290 Einrichtungen",
     insight: "Kategorisches Styling nach Träger empfohlen",
   },
   {
     id: "story-schulen",
     title: "Grundschulen",
-    description: "Alle Grundschulen in Dresden mit Standort, Schulart und Trägerschaft.",
+    description: "Alle Grundschulen in Dresden mit Standort und Adresse, gekennzeichnet nach städtischer oder freier Trägerschaft.",
     icon: BookOpen,
     url: "https://kommisdd.dresden.de/net3/public/ogc.ashx?NodeId=722&Service=WFS&Request=GetCapabilities",
     gradient: "from-violet-500/20 to-purple-600/10",
     iconBg: "bg-violet-500",
     category: "Bildung",
-    featureHint: "~100 Schulen",
-    insight: "Vergleiche staatliche und freie Träger",
+    featureHint: "~90 Schulen",
+    insight: "Städtische und freie Schulen vergleichen (Attribut „lhdd“)",
   },
   {
     id: "story-spielplaetze",
@@ -109,7 +110,7 @@ const DATA_STORIES: DataStory[] = [
     gradient: "from-orange-500/20 to-amber-600/10",
     iconBg: "bg-orange-500",
     category: "Freizeit",
-    featureHint: "~400 Spielplätze",
+    featureHint: "~270 Spielplätze",
     insight: "Räumliche Verteilung nach Stadtteilen analysieren",
   },
   {
@@ -149,7 +150,7 @@ const DATA_STORIES: DataStory[] = [
     gradient: "from-slate-500/20 to-gray-600/10",
     iconBg: "bg-slate-500",
     category: "Infrastruktur",
-    featureHint: "Abfallinfrastruktur",
+    featureHint: "~640 Standplätze",
     insight: "Containerstandorte nach Typ einfärben",
   },
   {

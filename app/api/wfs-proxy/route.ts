@@ -38,7 +38,7 @@ const UPSTREAM_ACCEPT =
 /** Zeitlimit für den gesamten Abruf – verhindert, dass ein hängender Dienst dauerhaft einen Serverprozess belegt. */
 const UPSTREAM_TIMEOUT_MS = 20_000;
 
-/** Obergrenze für die Antwortgröße, da der Rumpf vollständig in den Speicher gelesen wird (GetFeature ist auf 500 Objekte begrenzt). */
+/** Obergrenze für die Antwortgröße, da der Rumpf vollständig in den Speicher gelesen wird (GetFeature ist über WFS_FEATURE_LIMIT begrenzt). */
 const MAX_UPSTREAM_BYTES = 32 * 1024 * 1024;
 
 export async function GET(request: NextRequest) {
@@ -441,8 +441,8 @@ function gmlToGeoJson(gmlText: string): GeoJSON.FeatureCollection {
     }
   }
 
-  // Gesamtzahl des Dienstes mitgeben, damit das Frontend eine auf count=500
-  // gekappte Antwort erkennt (siehe lib/wfs-service.ts)
+  // Gesamtzahl des Dienstes mitgeben, damit das Frontend eine auf
+  // WFS_FEATURE_LIMIT gekappte Antwort erkennt (siehe lib/wfs-service.ts)
   const matched = Number(attr(root, "numberMatched") ?? attr(root, "numberOfFeatures"));
   return {
     type: "FeatureCollection",

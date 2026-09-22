@@ -160,7 +160,6 @@ export function DatasetSidebar() {
     }
     setIsDirectLoading(true);
     try {
-      const hostname = new URL(url).hostname;
       const baseUrl = new URL(url);
       const capUrl = new URL(`${baseUrl.origin}${baseUrl.pathname}`);
       const preservedParams = ["nodeid", "node_id", "id", "map"];
@@ -169,7 +168,8 @@ export function DatasetSidebar() {
           capUrl.searchParams.set(key, value);
         }
       });
-      await loadLayer(capUrl.toString(), hostname);
+      // Kein Name übergeben: Der Layer übernimmt den Titel aus den Capabilities
+      await loadLayer(capUrl.toString());
       setDirectUrl("");
     } catch (err) {
       toast.error("Fehler beim Laden", { description: err instanceof Error ? err.message : String(err) });

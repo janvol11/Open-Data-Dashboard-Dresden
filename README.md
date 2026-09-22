@@ -5,7 +5,7 @@ Ein interaktives Dashboard zur Erkundung, Visualisierung und Analyse von Geodate
 ## Funktionen
 
 - **Katalogsuche:** Anbindung an die GovData-CKAN-API über eine serverseitige Proxy-Route mit nachgelagertem Filter auf Dresdner Datensätze und Geodienste. GovData aggregiert bundesweit – der Zuschnitt auf Dresden entsteht erst im Post-Filter (siehe [Andere Kommunen anbinden](#andere-kommunen-anbinden)).
-- **WFS-Integration:** Auswertung von `GetCapabilities` zur Ermittlung der Layer-Namen und Abruf per `GetFeature` (WFS 2.0.0, EPSG:4326, begrenzt auf 500 Objekte). Liefert ein Dienst kein GeoJSON, wandelt der Proxy das GML-Ergebnis um.
+- **WFS-Integration:** Auswertung von `GetCapabilities` zur Ermittlung der Layer-Namen und Abruf per `GetFeature` (WFS 2.0.0, EPSG:4326, begrenzt auf 1.000 Objekte). Liefert ein Dienst kein GeoJSON, wandelt der Proxy das GML-Ergebnis um.
 - **Interaktive Karte:** Leaflet-Kartenansicht mit mehreren gleichzeitigen Layern, Heatmap-Darstellung und thematischer Einfärbung (numerisch nach Quantilklassen, kategorisch nach Ausprägung).
 - **Ortssuche:** Adressen, Straßen und Stadtteile in Dresden über Nominatim (OpenStreetMap) finden und direkt dorthin springen.
 - **Visuelle Analysen:** Häufigkeitsverteilungen, Zeitreihen, Korrelationsmatrix mit Streudiagramm und Datenqualitätsbericht. Alle Auswertungen folgen dem Kartenausschnitt, ein Klick auf einen Balken der Verteilung filtert zusätzlich Karte, Tabelle und die übrigen Diagramme auf diesen Wert (Cross-Filtering).
@@ -31,7 +31,7 @@ Praktisch heißt das: Ein fremder WFS lässt sich schon heute über „WFS / WMS
 https://geodienste.leipzig.de/l3/OpenData/Baeume/wfs?service=wfs&request=GetCapabilities
 ```
 
-Der Dienst meldet den Layer `OpenData:Baeume` und liefert über den unveränderten Proxy 500 Punkt-Features samt Attributen (`gattung`, `pflanzjahr`, `baumhoehe` …).
+Der Dienst meldet den Layer `OpenData:Baeume` und liefert über den unveränderten Proxy Punkt-Features bis zur Obergrenze samt Attributen (`gattung`, `pflanzjahr`, `baumhoehe` …).
 
 ### Was für die Katalogsuche zu ändern wäre
 
