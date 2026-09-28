@@ -57,6 +57,7 @@
     "typescript": "5.9.3"
   },
   "description": "Open Data Dashboard für die Landeshauptstadt Dresden",
+  "author": "Jan Luca Volke",
   "license": "ISC",
   "engines": {
     "node": ">=20.9"
